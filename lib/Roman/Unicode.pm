@@ -1,4 +1,4 @@
-package Roman;
+package Roman::Unicode;
 
 use utf8;
 use 5.014;
@@ -7,8 +7,13 @@ use feature qw(unicode_strings);
 use strict;
 use warnings;
 use open IO => ':utf8';
+use vars qw( $VERSION @EXPORT_OK );
 
-our $VERSION='1.23';
+use Exporter;
+@EXPORT_OK = qw( is_roman to_perl to_roman to_ascii );
+
+$VERSION = '1.01';
+
 
 =encoding utf8
 
@@ -18,26 +23,25 @@ Roman::Unicode - Make roman numerals, using the Unicode characters for them
 
 =head1 SYNOPSIS
 
-	use Roman::Unicode;
+	use Roman::Unicode qw( to_roman is_roman to_perl );
 
-	$arabic = arabic($roman) if is_roman($roman);
-	$roman  = Roman($arabic);
+	my $perl_number  = to_perl( $roman ) if is_roman( $roman );
+	my $roman_number = to_roman( $arabic );
 
 =head1 DESCRIPTION
-
-
 
 =head1 Functions
 
 =head2 is_roman
 
-Returns true if the string looks like a valid roman numeral. This works with
-either the ASCII version 
+Returns true if the string looks like a valid roman numeral. This
+works with either the ASCII version or the ones using the characters
+in the U+2160 to U+2188 range.
 
 =head2 to_perl( ROMAN )
 
-If the argument is a valid roman numeral, to_perl returns the Perl number.
-Otherwise, it returns nothing.
+If the argument is a valid roman numeral, C<to_perl> returns the Perl
+number. Otherwise, it returns nothing.
 
 =head2 to_roman( PERL_NUMBER )
 
@@ -69,7 +73,7 @@ Set, you're limited to numbers less than 400,000 (although you could make
 
 =head1 AUTHOR
 
-brian d foy C<< <brian.d.foy@gmail.com> >> 2011 
+brian d foy C<< <brian.d.foy@gmail.com> >> 2011
 
 This module started with the Roman module, credited to:
 
@@ -84,9 +88,6 @@ Copyright (c) 2011, brian d foy.
 You can use this module under the same terms as Perl itself.
 
 =cut
-
-use Exporter;
-our @EXPORT = qw(is_roman arabic Roman roman);
 
 # I'm specifically not using the characters for the other roman numberals
 # because those are meant to stand alone, as they might in a clock face
@@ -105,7 +106,7 @@ our %roman2arabic = qw(
 	Ⅰ 1 Ⅴ 5 Ⅹ 10
 	Ⅼ 50 Ⅽ 100 Ⅾ 500 Ⅿ 1000 ↁ 5000 ↂ 10000 ↇ 50000 ↈ 100000
 
-	ⅰ 1 ⅴ 5 ⅹ 10 
+	ⅰ 1 ⅴ 5 ⅹ 10
 	ⅼ 50 ⅽ 100 ⅾ 500 ⅿ 1000
 	);
 
@@ -114,8 +115,8 @@ sub _get_chars { my @chars = $_[0] =~ /(\X)/ug }
 sub _highest_value {  (sort { $a <=> $b } values %roman2arabic)[-1] }
 
 sub is_roman($) {
-    my @chars = _get_chars( $_[0] ); 
-	
+    my @chars = _get_chars( $_[0] );
+
     if( @chars == 0 ) { return 0 }
     else {
     	return 0 if grep { ! exists $roman2arabic{ $_ } } @chars;
@@ -123,7 +124,7 @@ sub is_roman($) {
     	}
 	}
 
-sub arabic($) {
+sub to_perl($) {
     is_roman $_[0] or return;
     my($last_digit) = _highest_value();
     my($arabic);
@@ -140,10 +141,10 @@ sub arabic($) {
 BEGIN {
 
 my %roman_digits = qw(
-	1 ⅠⅤ 
-	10 ⅩⅬ 
-	100 ⅭⅮ 
-	1000 Ⅿↁ 
+	1 ⅠⅤ
+	10 ⅩⅬ
+	100 ⅭⅮ
+	1000 Ⅿↁ
 	10000 ↂↇ
 	100000 ↈↈↈↈ
 	);
@@ -151,26 +152,26 @@ my %roman_digits = qw(
 my @figure = reverse sort keys %roman_digits;
 $roman_digits{$_} = [split(//, $roman_digits{$_}, 2)] foreach @figure;
 
-sub roman($) {
+sub to_roman($) {
     my( $arg ) = @_;
     0 < $arg and $arg < 4 * _highest_value()  or return;
 
     my($x, $roman) = ( '', '' );
     foreach my $figure ( @figure ) {
-        my( $digit, $i, $v ) = (int( $arg/$figure ), @{$roman_digit{$figure}});
+        my( $digit, $i, $v ) = (int( $arg/$figure ), @{$roman_digits{$figure}});
 
         if( 1 <= $digit and $digit <= 3 ) {
             $roman .= $i x $digit;
-        	} 
+        	}
         elsif( $digit == 4 ) {
             $roman .= "$i$v";
-        	} 
+        	}
         elsif( $digit == 5 ) {
             $roman .= $v;
-        	} 
+        	}
         elsif( 6 <= $digit and $digit <= 8 ) {
             $roman .= $v . $i x ($digit - 5);
-        	} 
+        	}
         elsif( $digit == 9 ) {
             $roman .= "$i$x";
         	}
@@ -178,7 +179,7 @@ sub roman($) {
         $arg -= $digit * $figure;
         $x = $i;
     	}
- 
+
 	$roman;
 	}
 }
@@ -190,7 +191,7 @@ sub _compose {
 	my $_ = _decompose( $string );
 	# ASCII / Roman
 	s/III/ⅠⅠⅠ/g;
-	s/II/ⅠⅠ/g
+	s/II/ⅠⅠ/g;
 	s/IV/ⅠⅤ/g;
 	s/VIII/ⅤⅠⅠⅠ/g;
 	s/VI/ⅤⅠ/g;
@@ -198,7 +199,7 @@ sub _compose {
 	s/IX/ⅠⅩ/g;
 	s/XII/ⅩⅠⅠ/g;
 	s/XI/ⅩⅠ/g;
-	
+
 	$_;
 	}
 
