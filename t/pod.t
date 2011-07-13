@@ -1,6 +1,8 @@
-#!perl -T
-
 use Test::More;
-eval "use Test::Pod 1.14";
-plan skip_all => "Test::Pod 1.14 required for testing POD" if $@;
+
+my $pod_module  = 'Test::Pod';
+my $pod_version = 1.14;
+
+eval "use $pod_module $pod_version";
+plan skip_all => "You need $pod_module $pod_version to test Pod" if $@;
 all_pod_files_ok();
