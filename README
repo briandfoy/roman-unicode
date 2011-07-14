@@ -1,60 +1,25 @@
-Roman.pm version 1.23
+You can install this using in the usual Perl fashion
 
-NAME
-     Roman - Perl module for conversion between Roman and Arabic
-     numerals.
+	perl Makefile.PL
+	make
+	make test
+	make install
 
-SYNOPSIS
-             use Roman;
+The documentation is in the module file.  Once you install
+the file, you can read it with perldoc.
 
-             $arabic = arabic($roman) if isroman($roman);
-             $roman = Roman($arabic);
-             $roman = roman($arabic);
+	perldoc Roman::Unicode
 
-DESCRIPTION
-     This package provides some functions which help conversion
-     of numeric notation between Roman and Arabic.
+If you want to read it before you install it, you can use
+perldoc directly on the module file.
 
-INSTALLATION
+	perldoc  lib/Roman/Unicode.pm
 
-To install this module, run the following commands:
+This module is also in Github:
 
-    perl Makefile.PL
-    make
-    make test
-    make install
+	http://github.com/briandfoy/
 
-Or use `cpan` or `cpanp` (best way).
 
-BUGS
-     Domain of valid Roman numerals is limited to less than 4000,
-     since proper Roman digits for the rest are not available in
-     ASCII.
+Enjoy,
 
-SUPPORT AND DOCUMENTATION
-
-After installing, you can find documentation for this module with the perldoc command.
-
-    perldoc Roman
-
-You can also look for information at:
-
-    Search CPAN
-        http://search.cpan.org/dist/Roman
-
-    CPAN Request Tracker:
-        http://rt.cpan.org/NoAuth/Bugs.html?Dist=Roman
-
-    AnnoCPAN, annotated CPAN documentation:
-        http://annocpan.org/dist/Roman
-
-    CPAN Ratings:
-        http://cpanratings.perl.org/d/Roman
-
-COPYRIGHT AND LICENCE
-
-Copyright (c) 1995-1997 OZAWA Sakuro.
-Copyright (C) 2007-2008 Alexandr Ciornii
-
-This program is free software; you can redistribute it and/or modify it
-under the same terms as Perl itself.
+brian d foy, bdfoy@cpan.org

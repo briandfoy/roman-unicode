@@ -1,10 +1,10 @@
 Changes
-MANIFEST
-META.yml # Will be created by "make dist"
+lib/Roman/Unicode.pm
 Makefile.PL
+MANIFEST
 README
-lib/Roman.pm
-t/00-load.t
-t/01.t
+t/load.t
+t/numbers.t
 t/pod-coverage.t
 t/pod.t
+t/test_manifest
