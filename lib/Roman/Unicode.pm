@@ -154,7 +154,11 @@ $roman_digits{$_} = [split(//, $roman_digits{$_}, 2)] foreach @figure;
 
 sub to_roman($) {
     my( $arg ) = @_;
+
+    {
+    no warnings 'numeric';
     0 < $arg and $arg < 4 * _highest_value()  or return;
+	}
 
     my($x, $roman) = ( '', '' );
     foreach my $figure ( @figure ) {
