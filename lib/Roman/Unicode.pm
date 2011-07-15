@@ -31,20 +31,26 @@ Roman::Unicode - Make roman numerals, using the Unicode characters for them
 
 =head1 DESCRIPTION
 
-=head1 Functions
+I made this module as a way to demonstrate various Unicode things without
+mixing up natural language stuff. Surprisingly, roman numerals can do quite
+a bit with that.
 
-=head2 is_roman
+=head2 Functions
+
+=over 4
+
+=item is_roman
 
 Returns true if the string looks like a valid roman numeral. This
 works with either the ASCII version or the ones using the characters
 in the U+2160 to U+2188 range.
 
-=head2 to_perl( ROMAN )
+=item to_perl( ROMAN )
 
 If the argument is a valid roman numeral, C<to_perl> returns the Perl
 number. Otherwise, it returns nothing.
 
-=head2 to_roman( PERL_NUMBER )
+=item to_roman( PERL_NUMBER )
 
 If the argument is a valid Perl number, even if it is a string,
 C<to_roman> returns the roman numeral representation. This uses the
@@ -56,7 +62,7 @@ nothing. Note that 0 doesn't have a roman numeral representation.
 If you want the lowercase version, you can use C<lc> on the result.
 However, some of the roman numerals don't have lowercase versions.
 
-=head2 to_ascii( ROMAN )
+=item to_ascii( ROMAN )
 
 If the argument is a valid roman numeral, it returns an ASCII
 representation of it. For characters that have ASCII representations,
@@ -69,14 +75,16 @@ art representations:
 	ↈ          ((C))
 	ↇ           (D)
 
-=head2 IsRoman
+=item IsRoman
 
-=head2 IsLowercaseRoman
+=item IsLowercaseRoman
 
-=head2 IsUppercaseRoman
+=item IsUppercaseRoman
 
 These define special properties to quickly match the characters this
 module considers valid Roman numerals.
+
+=back
 
 =head1 LIMITATIONS
 
@@ -86,7 +94,7 @@ Set, you're limited to numbers less than 400,000 (although you could make
 
 =head1 AUTHOR
 
-brian d foy C<< <brian.d.foy@gmail.com> >> 2011
+brian d foy C<< <brian.d.foy@gmail.com> >> 2011-
 
 This module started with the Roman module, credited to:
 
@@ -240,4 +248,5 @@ sub IsLowercaseRoman {
 217C\t217F
 CODE_NUMBERS
 	}
+
 1;
