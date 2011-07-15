@@ -2,9 +2,13 @@ Changes
 lib/Roman/Unicode.pm
 Makefile.PL
 MANIFEST
+MYMETA.yml
 README
+t/ascii.t
 t/load.t
 t/numbers.t
 t/pod-coverage.t
 t/pod.t
+t/pod_coverage.t
+t/properties.t
 t/test_manifest
