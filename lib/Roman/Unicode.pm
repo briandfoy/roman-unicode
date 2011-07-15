@@ -184,23 +184,17 @@ sub to_roman($) {
 	}
 }
 
-sub _compose {
-	my( $string ) = @_;
-	return unless is_roman( $string );
+sub to_ascii {
+	my( $roman ) = @_;
+	return unless is_roman( $roman );
 
-	my $_ = _decompose( $string );
-	# ASCII / Roman
-	s/III/ⅠⅠⅠ/g;
-	s/II/ⅠⅠ/g;
-	s/IV/ⅠⅤ/g;
-	s/VIII/ⅤⅠⅠⅠ/g;
-	s/VI/ⅤⅠ/g;
-	s/V/Ⅴ/g;
-	s/IX/ⅠⅩ/g;
-	s/XII/ⅩⅠⅠ/g;
-	s/XI/ⅩⅠ/g;
+	$roman =~ tr/ⅠⅤⅩⅬⅭⅮⅯ/IVXLCDM/;
 
-	$_;
+	$roman =~ s/ↂ/(C)/g;
+	$roman =~ s/ↈ/((C))/g;
+	$roman =~ s/ↇ/(D)/g;
+
+	$roman;
 	}
 
 1;
