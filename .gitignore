@@ -6,3 +6,4 @@ Makefile.old
 pm_to_blib
 blib
 Roman-*
+cover_db

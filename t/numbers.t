@@ -48,4 +48,16 @@ foreach my $roman ( sort keys %roman2perl ) {
 	is( Roman::Unicode::to_roman( $number ), $roman,  "$number is $roman" );
 	}
 
+{
+my @not_roman = qw( 0 -1 dog );
+
+foreach my $not_roman ( @not_roman, '', 5_000_000 ) {
+	ok( ! Roman::Unicode::is_roman( $not_roman ), "$not_roman is not roman" );
+	ok( ! defined Roman::Unicode::to_roman(  $not_roman ),
+		"$not_roman is not a Perl number" );
+	ok( ! defined Roman::Unicode::to_perl(  $not_roman ),
+		"$not_roman is not a Perl number" );
+	}
+}
+
 done_testing();
