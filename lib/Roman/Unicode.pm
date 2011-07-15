@@ -240,4 +240,15 @@ sub IsLowercaseRoman {
 217C\t217F
 CODE_NUMBERS
 	}
+
+sub ToLower {
+	require Config;
+	my $official = do  "$Config::Config{privlib}/unicore/To/Lower.pl";
+	$utf8::ToSpecLower{"\342\206\201"} = "(d)";   # ↁ U+2181
+	$utf8::ToSpecLower{"\342\206\202"} = "(c)";   # ↂ U+2182
+	$utf8::ToSpecLower{"\342\206\207"} = "((d))"; # ↇ U+2187
+	$utf8::ToSpecLower{"\342\206\210"} = "((c))"; # ↈ U+2188
+	return $official;
+	}
+
 1;
