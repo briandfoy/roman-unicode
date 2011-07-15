@@ -14,6 +14,7 @@ use Exporter 'import';
 
 $VERSION = '1.01';
 
+use Unicode::Normalize qw(NFKD);
 
 =encoding utf8
 
@@ -192,7 +193,7 @@ sub to_ascii {
 	my( $roman ) = @_;
 	return unless is_roman( $roman );
 
-	$roman =~ tr/ⅠⅤⅩⅬⅭⅮⅯ/IVXLCDM/;
+	$roman = NFKD( $roman );
 
 	$roman =~ s/ↂ/(C)/g;
 	$roman =~ s/ↈ/((C))/g;
