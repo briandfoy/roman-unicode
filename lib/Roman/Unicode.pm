@@ -65,6 +65,18 @@ art representations:
 
 	Roman       ASCII art
 	------      ----------
+	ↂ          (C)
+	ↈ          ((C))
+	ↇ           (D)
+
+=head2 IsRoman
+
+=head2 IsLowercaseRoman
+
+=head2 IsUppercaseRoman
+
+These define special properties to quickly match the characters this
+module considers valid Roman numerals.
 
 =head1 LIMITATIONS
 
@@ -115,15 +127,7 @@ sub _get_chars { my @chars = $_[0] =~ /(\X)/ug }
 
 sub _highest_value {  (sort { $a <=> $b } values %roman2arabic)[-1] }
 
-sub is_roman($) {
-    my @chars = _get_chars( $_[0] );
-
-    if( @chars == 0 ) { return 0 }
-    else {
-    	return 0 if grep { ! exists $roman2arabic{ $_ } } @chars;
-    	return 1;
-    	}
-	}
+sub is_roman($) { $_[0] =~ / \A \p{IsRoman}+ \z /x }
 
 sub to_perl($) {
     is_roman $_[0] or return;
@@ -202,4 +206,38 @@ sub to_ascii {
 	$roman;
 	}
 
+sub IsRoman {
+	return <<'CODE_NUMBERS';
+2160
+2164
+2169
+216C 216F
+2170
+2174
+2179
+217C 217F
+2181 2182
+2187 2188
+CODE_NUMBERS
+	}
+
+sub IsUppercaseRoman {
+	return <<"CODE_NUMBERS";
+2160
+2164
+2169
+216C\t216F
+2181\t2182
+2187\t2188
+CODE_NUMBERS
+	}
+
+sub IsLowercaseRoman {
+	return <<"CODE_NUMBERS";
+2170
+2174
+2179
+217C\t217F
+CODE_NUMBERS
+	}
 1;

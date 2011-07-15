@@ -1,5 +1,6 @@
 load.t
 numbers.t
 ascii.t
+properties.t
 pod.t
 pod_coverage.t
