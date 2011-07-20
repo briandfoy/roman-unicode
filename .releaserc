@@ -1,3 +1,4 @@
 CPAN_USER BDFOY
 skip_prereqs 1
 skip_kwalitee 1
+should_upload_to_pause 1
