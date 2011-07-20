@@ -39,7 +39,7 @@ a bit with that.
 
 =over 4
 
-=item is_roman
+=item is_roman( STRING )
 
 Returns true if the string looks like a valid roman numeral. This
 works with either the ASCII version or the ones using the characters
