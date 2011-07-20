@@ -1,4 +1,7 @@
 
+1.02_01 - Wed Jul 20 01:20:35 2011
+	* Minor doc fix
+
 1.02 - Fri Jul 15 17:04:46 2011
 	* Convert to ASCII with NFKD, to extent possible and cheat
 	otherwise
