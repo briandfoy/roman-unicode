@@ -10,5 +10,5 @@ WriteMakefile(
     AUTHOR              => 'brian d foy <brian.d.foy@gmail.com>',
     VERSION_FROM        => 'lib/Roman/Unicode.pm',
 	ABSTRACT            => 'Make roman numerals, using the Unicode characters for them',
-    clean               => { FILES => 'Roman-*' },
-);
+    clean               => { FILES => 'Roman-* *.bak *.old' },
+	);
