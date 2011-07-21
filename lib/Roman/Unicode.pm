@@ -12,7 +12,7 @@ use vars qw( $VERSION @EXPORT_OK );
 use Exporter 'import';
 @EXPORT_OK = qw( is_roman to_perl to_roman to_ascii );
 
-$VERSION = '1.02_01';
+$VERSION = '';
 
 use Unicode::Normalize qw(NFKD);
 
@@ -207,9 +207,10 @@ sub to_ascii {
 
 	$roman = NFKD( $roman );
 
-	$roman =~ s/ↂ/(C)/g;
-	$roman =~ s/ↈ/((C))/g;
-	$roman =~ s/ↇ/(D)/g;
+	$roman =~ s/ↁ/|))/g;
+	$roman =~ s/ↂ/((|))/g;
+	$roman =~ s/ↈ/(((|)))/g;
+	$roman =~ s/ↇ/|)))/g;
 
 	$roman;
 	}
