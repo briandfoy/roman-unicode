@@ -17,6 +17,15 @@ use_ok( 'Roman::Unicode' );
 
 BEGIN{
 %roman2perl = qw(
+	ⅰ       1
+	ⅰⅰ      2
+	ⅰⅴ      4
+	ⅴ       5
+	ⅹ       10
+	ⅼ       50
+	ⅽ       100
+	ⅾ       500
+	ⅿ       1000
 	Ⅰ       1
 	ⅠⅠ       2
 	ⅠⅠⅠ      3
@@ -43,13 +52,13 @@ foreach my $roman ( sort keys %roman2perl ) {
 	my $number = $roman2perl{$roman};
 
 	no warnings 'utf8';
-	ok( Roman::Unicode::is_roman( $roman  ),          "$roman is roman"   );
-	is( Roman::Unicode::to_perl(  $roman  ), $number, "$roman is $number" );
-	is( Roman::Unicode::to_roman( $number ), $roman,  "$number is $roman" );
+	ok( Roman::Unicode::is_roman( $roman  ),            "$roman is roman"   );
+	is( Roman::Unicode::to_perl(  $roman  ), $number,   "$roman is $number" );
+	is( Roman::Unicode::to_roman( $number ), uc $roman, "$number is $roman" );
 	}
 
 {
-my @not_roman = qw( 0 -1 dog );
+my @not_roman = qw( 0 -1 dog Ⅰⅴ );
 
 foreach my $not_roman ( @not_roman, '', 5_000_000 ) {
 	ok( ! Roman::Unicode::is_roman( $not_roman ), "$not_roman is not roman" );

@@ -12,7 +12,7 @@ use vars qw( $VERSION @EXPORT_OK );
 use Exporter 'import';
 @EXPORT_OK = qw( is_roman to_perl to_roman to_ascii );
 
-$VERSION = '1.02_01';
+$VERSION = '1.02_03';
 
 use Unicode::Normalize qw(NFKD);
 
@@ -43,7 +43,8 @@ a bit with that.
 
 Returns true if the string looks like a valid roman numeral. This
 works with either the ASCII version or the ones using the characters
-in the U+2160 to U+2188 range.
+in the U+2160 to U+2188 range. You cannot mix the uppercase and lowercase
+numerals.
 
 =item to_perl( ROMAN )
 
@@ -110,7 +111,7 @@ You can use this module under the same terms as Perl itself.
 
 =cut
 
-# I'm specifically not using the characters for the other roman numberals
+# I'm specifically not using the characters for the other roman numerals
 # because those are meant to stand alone, as they might in a clock face
 our %valid_roman = map { $_, 1 } (
 	# the capitals U+2160 to U+216F, U+2180 to U+2182, U+2187 to U+2188
@@ -135,7 +136,11 @@ sub _get_chars { my @chars = $_[0] =~ /(\X)/ug }
 
 sub _highest_value {  (sort { $a <=> $b } values %roman2arabic)[-1] }
 
-sub is_roman($) { $_[0] =~ / \A \p{IsRoman}+ \z /x }
+sub is_roman($) {
+	$_[0] =~ / \A \p{IsUppercaseRoman}+ \z /x
+		or
+	$_[0] =~ / \A \p{IsLowercaseRoman}+ \z /x
+	}
 
 sub to_perl($) {
     is_roman $_[0] or return;
@@ -207,26 +212,16 @@ sub to_ascii {
 
 	$roman = NFKD( $roman );
 
-	$roman =~ s/ↂ/(C)/g;
-	$roman =~ s/ↈ/((C))/g;
-	$roman =~ s/ↇ/(D)/g;
+	$roman =~ s/ↁ/|))/g;
+	$roman =~ s/ↂ/((|))/g;
+	$roman =~ s/ↈ/(((|)))/g;
+	$roman =~ s/ↇ/|)))/g;
 
 	$roman;
 	}
 
 sub IsRoman {
-	return <<'CODE_NUMBERS';
-2160
-2164
-2169
-216C 216F
-2170
-2174
-2179
-217C 217F
-2181 2182
-2187 2188
-CODE_NUMBERS
+	IsUppercaseRoman() . IsLowercaseRoman()
 	}
 
 sub IsUppercaseRoman {
