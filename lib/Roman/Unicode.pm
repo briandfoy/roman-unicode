@@ -43,7 +43,7 @@ a bit with that.
 
 Returns true if the string looks like a valid roman numeral. This
 works with either the ASCII version or the ones using the characters
-in the U+2160 to U+2188 range.
+in the U+2160 to U+2188 range. This always returns an uppercase version.
 
 =item to_perl( ROMAN )
 
