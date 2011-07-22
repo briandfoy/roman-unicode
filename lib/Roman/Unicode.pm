@@ -110,7 +110,7 @@ You can use this module under the same terms as Perl itself.
 
 =cut
 
-# I'm specifically not using the characters for the other roman numberals
+# I'm specifically not using the characters for the other roman numerals
 # because those are meant to stand alone, as they might in a clock face
 our %valid_roman = map { $_, 1 } (
 	# the capitals U+2160 to U+216F, U+2180 to U+2182, U+2187 to U+2188
