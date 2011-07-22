@@ -135,7 +135,11 @@ sub _get_chars { my @chars = $_[0] =~ /(\X)/ug }
 
 sub _highest_value {  (sort { $a <=> $b } values %roman2arabic)[-1] }
 
-sub is_roman($) { $_[0] =~ / \A \p{IsRoman}+ \z /x }
+sub is_roman($) {
+	$_[0] =~ / \A \p{IsUppercaseRoman}+ \z /x
+		or
+	$_[0] =~ / \A \p{IsLowercaseRoman}+ \z /x
+	}
 
 sub to_perl($) {
     is_roman $_[0] or return;
@@ -216,18 +220,7 @@ sub to_ascii {
 	}
 
 sub IsRoman {
-	return <<'CODE_NUMBERS';
-2160
-2164
-2169
-216C 216F
-2170
-2174
-2179
-217C 217F
-2181 2182
-2187 2188
-CODE_NUMBERS
+	IsUppercaseRoman() . IsLowercaseRoman()
 	}
 
 sub IsUppercaseRoman {
