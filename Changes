@@ -1,4 +1,7 @@
 
+1.02_02 - Thu Jul 21 03:21:18 2011
+	* Use the Perligata ASCII decompositions, like |)))
+
 1.02_01 - Wed Jul 20 16:59:36 2011
 	* Minor doc updates
 
