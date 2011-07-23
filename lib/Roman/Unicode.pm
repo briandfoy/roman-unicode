@@ -72,9 +72,10 @@ art representations:
 
 	Roman       ASCII art
 	------      ----------
-	ↂ          (C)
-	ↈ          ((C))
-	ↇ           (D)
+	ↁ           |)
+	ↂ          ((|))
+	ↈ          (((|)))
+	ↇ           |))
 
 =item IsRoman
 
