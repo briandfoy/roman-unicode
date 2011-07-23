@@ -29,15 +29,16 @@ my %upper2lower = qw(
 	Ⅿ           ⅿ
 	ⅯⅭⅮⅩⅬⅠⅤ     ⅿⅽⅾⅹⅼⅰⅴ
 	ⅯⅯⅤⅠⅠ       ⅿⅿⅴⅰⅰ
-	ↈↈ        ((c))((c))
-	ↂↈ	        (c)((c))
-	ↂↈⅯↂ		(c)((c))ⅿ((c))
-	ↂↈⅯↂⅤⅠⅠ   (c)((c))ⅿ((c))ⅴⅰⅰ
-	ↈↈↈ      ((c))((c))((c))
+	ↈↈ        (((|)))(((|)))
+	ↂↈ	        ((|))(((|)))
+	ↂↈⅯↂ		((|))(((|)))ⅿ((|))
+	ↂↈⅯↂⅤⅠⅠ   ((|))(((|)))ⅿ((|))ⅴⅰⅰ
+	ↈↈↈ      (((|)))(((|)))(((|)))
 	);
 
 foreach my $upper ( sort keys %upper2lower ) {
 	my $lower = $upper2lower{$upper};
+	use Unicode::Casing lc => \&Roman::Unicode::to_roman_lower;
 
 	is( lc $upper, $lower, "$upper turns into $lower"   );
 	}

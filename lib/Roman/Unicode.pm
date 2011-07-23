@@ -86,6 +86,11 @@ art representations:
 These define special properties to quickly match the characters this
 module considers valid Roman numerals.
 
+=item to_roman_lower
+
+A subroutine you can use with C<Unicode::Casing>. It's a bit more special
+because it turns the higher magnitude characters (
+
 =back
 
 =head1 LIMITATIONS
@@ -245,14 +250,17 @@ sub IsLowercaseRoman {
 CODE_NUMBERS
 	}
 
-sub ToLower {
-	require Config;
-	my $official = do "$Config::Config{privlib}/unicore/To/Lower.pl";
-	$utf8::ToSpecLower{"\342\206\201"} = "(d)";   # ↁ U+2181
-	$utf8::ToSpecLower{"\342\206\202"} = "(c)";   # ↂ U+2182
-	$utf8::ToSpecLower{"\342\206\207"} = "((d))"; # ↇ U+2187
-	$utf8::ToSpecLower{"\342\206\210"} = "((c))"; # ↈ U+2188
-	return $official;
+sub to_roman_lower {
+	return unless &is_roman;
+	
+	my $lower = CORE::lc( $_[0] );
+	
+	$lower =~ s/ↁ/|)/g;       # ↁ U+2181
+	$lower =~ s/ↂ/((|))/g;   # ↂ U+2182
+	$lower =~ s/ↇ/|))/g;      # ↇ U+2187
+	$lower =~ s/ↈ/(((|)))/g; # ↈ U+2188
+
+	return $lower;
 	}
 
 1;
