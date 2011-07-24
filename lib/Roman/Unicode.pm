@@ -188,21 +188,13 @@ package Roman::Unicode {
 		foreach my $figure ( @figure ) {
 			my( $digit, $i, $v ) = (int( $arg/$figure ), @{$roman_digits{$figure}});
 
-			if( 1 <= $digit and $digit <= 3 ) {
-				$roman .= $i x $digit;
-				}
-			elsif( $digit == 4 ) {
-				$roman .= "$i$v";
-				}
-			elsif( $digit == 5 ) {
-				$roman .= $v;
-				}
-			elsif( 6 <= $digit and $digit <= 8 ) {
-				$roman .= $v . $i x ($digit - 5);
-				}
-			elsif( $digit == 9 ) {
-				$roman .= "$i$x";
-				}
+			$roman .= do {
+				if( 1 <= $digit and $digit <= 3 )    { $i x $digit }
+				elsif( $digit == 4 )                 { "$i$v" }
+				elsif( $digit == 5 )                 { $v }
+				elsif( 6 <= $digit and $digit <= 8 ) { $v . $i x ($digit - 5) }
+				elsif( $digit == 9 )                 { "$i$x" }
+				};
 
 			$arg -= $digit * $figure;
 			$x = $i;
