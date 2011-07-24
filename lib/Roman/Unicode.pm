@@ -74,7 +74,8 @@ module considers valid Roman numerals.
 =item to_roman_lower
 
 A subroutine you can use with C<Unicode::Casing>. It's a bit more special
-because it turns the higher magnitude characters (
+because it turns the higher magnitude characters into ASCII versions. That
+means that the return value might not be a valid according to C<is_roman>.
 
 =back
 
