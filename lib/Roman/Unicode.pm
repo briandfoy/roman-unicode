@@ -18,7 +18,7 @@ Roman::Unicode - Make roman numerals, using the Unicode characters for them
 
 I made this module as a way to demonstrate various Unicode things without
 mixing up natural language stuff. Surprisingly, roman numerals can do quite
-a bit with that.
+a bit with that. You'll have to read the source to see it in action.
 
 =head2 Functions
 
