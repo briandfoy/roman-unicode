@@ -186,7 +186,7 @@ package Roman::Unicode {
 		$_[0] =~ / \A \p{IsLowercaseRoman}+ \z /x
 		}
 
-	sub to_perl($) {
+	sub to_perl($) { # Stolen from Roman.pm, mostly
 		is_roman $_[0] or return;
 		my($last_digit) = _highest_value();
 		my($arabic);
@@ -214,7 +214,7 @@ package Roman::Unicode {
 	my @figure = reverse sort keys %roman_digits;
 	$roman_digits{$_} = [split(//, $roman_digits{$_}, 2)] foreach @figure;
 
-	sub to_roman($) {
+	sub to_roman($) { # stolen from Roman.pm, mostly
 		my( $arg ) = @_;
 
 		{
