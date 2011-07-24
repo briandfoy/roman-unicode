@@ -16,48 +16,48 @@ if( Test::Builder->VERSION < 2 ) {
 use_ok( 'Roman::Unicode' );
 
 ###########################################################################
-# Uppercase 
+# Uppercase
 {
-my @romans = qw( 
-	Ⅰ ⅠⅠ ⅠⅠⅠ ⅠⅤ Ⅴ ⅤⅠⅠ Ⅹ Ⅼ Ⅽ Ⅾ Ⅿ ⅯⅭⅮⅩⅬⅠⅤ ⅯⅯⅤⅠⅠ 
-	ↈↈ ↂↈ ↂↈⅯↂ ↂↈⅯↂⅤⅠⅠ ↈↈↈ ↈↈↈↂↈⅯↂⅭⅯⅩⅭⅠⅩ  
+my @romans = qw(
+	Ⅰ ⅠⅠ ⅠⅠⅠ ⅠⅤ Ⅴ ⅤⅠⅠ Ⅹ Ⅼ Ⅽ Ⅾ Ⅿ ⅯⅭⅮⅩⅬⅠⅤ ⅯⅯⅤⅠⅠ
+	ↈↈ ↂↈ ↂↈⅯↂ ↂↈⅯↂⅤⅠⅠ ↈↈↈ ↈↈↈↂↈⅯↂⅭⅯⅩⅭⅠⅩ
 	);
 
 foreach ( @romans ) {
 	ok( m/\A\p{Roman::Unicode::IsRoman}+\z/, "$_ matches IsRoman" );
-	ok( m/\A\p{Roman::Unicode::IsUppercaseRoman}+\z/, 
+	ok( m/\A\p{Roman::Unicode::IsUppercaseRoman}+\z/,
 		"$_ matches IsUppercaseRoman" );
-	ok( ! m/\A\p{Roman::Unicode::IsLowercaseRoman}+\z/, 
+	ok( ! m/\A\p{Roman::Unicode::IsLowercaseRoman}+\z/,
 		"$_ does not match IsLowercaseRoman" );
 	}
 }
 
 ###########################################################################
-# Uppercase 
+# Uppercase
 {
-my @romans = map lc, qw( 
-	Ⅰ ⅠⅠ ⅠⅠⅠ ⅠⅤ Ⅴ ⅤⅠⅠ Ⅹ Ⅼ Ⅽ Ⅾ Ⅿ ⅯⅭⅮⅩⅬⅠⅤ ⅯⅯⅤⅠⅠ 
+my @romans = map lc, qw(
+	Ⅰ ⅠⅠ ⅠⅠⅠ ⅠⅤ Ⅴ ⅤⅠⅠ Ⅹ Ⅼ Ⅽ Ⅾ Ⅿ ⅯⅭⅮⅩⅬⅠⅤ ⅯⅯⅤⅠⅠ
 	);
 
 foreach ( @romans ) {
 	ok( m/\A\p{Roman::Unicode::IsRoman}+\z/, "$_ matches IsRoman" );
-	ok( m/\A\p{Roman::Unicode::IsLowercaseRoman}+\z/, 
+	ok( m/\A\p{Roman::Unicode::IsLowercaseRoman}+\z/,
 		"$_ matches IsLowercaseRoman" );
-	ok( ! m/\A\p{Roman::Unicode::IsUppercaseRoman}+\z/, 
+	ok( ! m/\A\p{Roman::Unicode::IsUppercaseRoman}+\z/,
 		"$_ does not match IsUppercaseRoman" );
 	}
 }
 
 ###########################################################################
-# Not 
+# Not
 {
 my @not_roman = qw( 0 -1 dog );
 
 foreach ( @not_roman, '', 5_000_000 ) {
 	ok( ! m/\A\p{Roman::Unicode::IsRoman}+\z/, "$_ does not match IsRoman" );
-	ok( ! m/\A\p{Roman::Unicode::IsUppercaseRoman}+\z/, 
+	ok( ! m/\A\p{Roman::Unicode::IsUppercaseRoman}+\z/,
 		"$_ does not match IsUppercaseRoman" );
-	ok( ! m/\A\p{Roman::Unicode::IsLowercaseRoman}+\z/, 
+	ok( ! m/\A\p{Roman::Unicode::IsLowercaseRoman}+\z/,
 		"$_ does not match IsLowercaseRoman" );
 	}
 }
