@@ -217,7 +217,7 @@ sub to_ascii {
 	my( $roman ) = @_;
 	return unless is_roman( $roman );
 
-	$roman = NFKD( $roman );
+	$roman = Unicode::Normalize::NFKD( $roman );
 
 	$roman =~ s/ↁ/|))/g;
 	$roman =~ s/ↂ/((|))/g;
