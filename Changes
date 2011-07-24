@@ -1,4 +1,9 @@
 
+1.02_03 - Sun Jul 24 04:41:19 2011
+	* Use Unicode::Casing for case mapping
+	* Create the IsLowercaseRoman property from the IsUppercaseRoman
+	property with some Unicode::UCD magic
+
 1.02_02 - Thu Jul 21 03:21:18 2011
 	* Use the Perligata ASCII decompositions, like |)))
 
