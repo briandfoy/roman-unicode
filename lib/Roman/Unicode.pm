@@ -55,9 +55,9 @@ However, some of the roman numerals don't have lowercase versions.
 =item to_ascii( ROMAN )
 
 If the argument is a valid roman numeral, it returns an ASCII
-representation of it. For characters that have ASCII representations,
-it uses those ASCII characters. For other characters, it uses ASCII
-art representations:
+representation of it. Most of the numeral code points have compatible
+decompositions, so the first step uses NFKD decomposition. For other
+characters, it uses ASCII art representations:
 
 	Roman       ASCII art
 	------      ----------
@@ -311,6 +311,7 @@ CODE_NUMBERS
 		$string .= "\n";
 		}
 
+    # Use this with Unicode::Casing, or not
 	sub to_roman_lower {
 		return unless &is_roman;
 
