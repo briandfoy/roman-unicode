@@ -62,20 +62,53 @@ art representations:
 	ↈ          (((|)))
 	ↇ           |))
 
-=item IsRoman
-
-=item IsLowercaseRoman
-
-=item IsUppercaseRoman
-
-These define special properties to quickly match the characters this
-module considers valid Roman numerals.
-
 =item to_roman_lower
 
 A subroutine you can use with C<Unicode::Casing>. It's a bit more special
 because it turns the higher magnitude characters into ASCII versions. That
 means that the return value might not be a valid according to C<is_roman>.
+
+=back
+
+=head2 User-defined properties
+
+Perl lets you define your own properties, as documented in L<perlunicode>. This
+module defines several.
+
+=over 4
+
+=item IsRoman
+
+The C<IsRoman> property is a combination of C<IsUppercaseRoman> and
+C<IsLowercaseRoman>.
+
+=item IsUppercaseRoman
+
+The C<IsUppercaseRoman> property matches these code points:
+
+	Ⅰ       U+2160      ʀᴏᴍᴀɴ ɴᴜᴍᴇʀᴀʟ ᴏɴᴇ
+	Ⅴ       U+2164      ʀᴏᴍᴀɴ ɴᴜᴍᴇʀᴀʟ ꜰɪᴠᴇ
+	Ⅹ       U+2169      ʀᴏᴍᴀɴ ɴᴜᴍᴇʀᴀʟ ᴛᴇɴ
+	Ⅼ       U+216C      ʀᴏᴍᴀɴ ɴᴜᴍᴇʀᴀʟ ꜰɪꜰᴛʏ
+	Ⅽ       U+216D      ʀᴏᴍᴀɴ ɴᴜᴍᴇʀᴀʟ ᴏɴᴇ ʜᴜɴᴅʀᴇᴅ
+	Ⅾ       U+216E      ʀᴏᴍᴀɴ ɴᴜᴍᴇʀᴀʟ ꜰɪᴠᴇ ʜᴜɴᴅʀᴇᴅ
+	Ⅿ       U+216F      ʀᴏᴍᴀɴ ɴᴜᴍᴇʀᴀʟ ᴏɴᴇ ᴛʜᴏᴜsᴀɴᴅ
+	ↁ       U+2181      ʀᴏᴍᴀɴ ɴᴜᴍᴇʀᴀʟ ꜰɪᴠᴇ ᴛʜᴏᴜsᴀɴᴅ
+	ↂ      U+2182      ʀᴏᴍᴀɴ ɴᴜᴍᴇʀᴀʟ ᴛᴇɴ ᴛʜᴏᴜsᴀɴᴅ
+	ↇ       U+2187      ʀᴏᴍᴀɴ ɴᴜᴍᴇʀᴀʟ ꜰɪꜰᴛʏ ᴛʜᴏᴜsᴀɴᴅ
+	ↈ      U+2188      ʀᴏᴍᴀɴ ɴᴜᴍᴇʀᴀʟ ᴏɴᴇ ʜᴜɴᴅʀᴇᴅ ᴛʜᴏᴜsᴀɴᴅ
+
+This excludes the other Roman numeral code points, such as Ⅻ (U+216B, ʀᴏᴍᴀɴ
+ɴᴜᴍᴇʀᴀʟ ᴛᴡᴇʟᴠᴇ) since they are not designed to be part of larger strings of
+Roman numerals.
+
+=item IsLowercaseRoman
+
+The C<IsLowercaseRoman> is the set of lowercase code points derived from the
+set of code points in C<IsUppercaseRoman>. It checks each code point in
+C<IsUppercaseRoman> and checks the Unicode Character Database (UCD) through
+L<Unicode::UCD> to see if it has a lowercase mapping. If there is a lowercase
+mapping, it makes it part of this property.
 
 =back
 
