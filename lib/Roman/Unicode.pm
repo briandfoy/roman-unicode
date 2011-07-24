@@ -66,11 +66,25 @@ art representations:
 	ↈ          (((|)))
 	ↇ           |))
 
+=back
+
+=head2 Case mapping
+
+As a demonstration of case mapping, I supply one function that uses
+L<Unicode::Casing>. You can lexically override the case-mapping functions
+as described in that module's documentation.
+
+=over 4
+
 =item to_roman_lower
 
 A subroutine you can use with C<Unicode::Casing>. It's a bit more special
 because it turns the higher magnitude characters into ASCII versions. That
-means that the return value might not be a valid according to C<is_roman>.
+means that the return value might not be a valid according to C<is_roman>. It
+returns nothing if the input isn't a valid Roman numeral string.
+
+You can also use this as a stand-alone function instead of C<lc>. That's the
+smart way to do it, but then you don't get to play with C<Unicode::Casing>.
 
 =back
 
