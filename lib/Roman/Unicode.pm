@@ -1,23 +1,6 @@
 use utf8;
 use 5.014;
 
-package Roman::Unicode;
-
-use feature qw(unicode_strings);
-
-use strict;
-use warnings;
-use open IO => ':utf8';
-use vars qw( $VERSION @EXPORT_OK );
-
-use Exporter 'import';
-@EXPORT_OK = qw( is_roman to_perl to_roman to_ascii );
-
-$VERSION = '1.02_03';
-
-use Unicode::UCD;
-use Unicode::Normalize qw(NFKD);
-
 =encoding utf8
 
 =head1 NAME
@@ -119,121 +102,136 @@ You can use this module under the same terms as Perl itself.
 
 =cut
 
-# I'm specifically not using the characters for the other roman numerals
-# because those are meant to stand alone, as they might in a clock face
-our %valid_roman = map { $_, 1 } (
-	# the capitals U+2160 to U+216F, U+2180 to U+2182, U+2187 to U+2188
-	qw(Ⅰ Ⅴ Ⅹ Ⅼ Ⅽ Ⅾ Ⅿ ↁ ↂ ↇ ↈ ),
-	# the lowercase U+2170 to U+217f
-	qw(ⅰ ⅴ ⅹ ⅼ ⅽ ⅾ ⅿ),
-	# the ASCII
-	qw(I V X L C D M),
-	qw(i v x l c d m),
+package Roman::Unicode {
+	use feature qw(unicode_strings);
 
-	);
+	use strict;
+	use warnings;
+	use open IO => ':utf8';
+	use vars qw( $VERSION @EXPORT_OK );
 
-our %roman2arabic = qw(
-	Ⅰ 1 Ⅴ 5 Ⅹ 10
-	Ⅼ 50 Ⅽ 100 Ⅾ 500 Ⅿ 1000 ↁ 5000 ↂ 10000 ↇ 50000 ↈ 100000
+	use Exporter 'import';
+	@EXPORT_OK = qw( is_roman to_perl to_roman to_ascii );
+	$VERSION = '1.02_03';
 
-	ⅰ 1 ⅴ 5 ⅹ 10
-	ⅼ 50 ⅽ 100 ⅾ 500 ⅿ 1000
-	);
+	use Unicode::UCD;
+	use Unicode::Normalize qw(NFKD);
 
-sub _get_chars { my @chars = $_[0] =~ /(\X)/ug }
+	# I'm specifically not using the characters for the other roman numerals
+	# because those are meant to stand alone, as they might in a clock face
+	our %valid_roman = map { $_, 1 } (
+		# the capitals U+2160 to U+216F, U+2180 to U+2182, U+2187 to U+2188
+		qw(Ⅰ Ⅴ Ⅹ Ⅼ Ⅽ Ⅾ Ⅿ ↁ ↂ ↇ ↈ ),
+		# the lowercase U+2170 to U+217f
+		qw(ⅰ ⅴ ⅹ ⅼ ⅽ ⅾ ⅿ),
+		# the ASCII
+		qw(I V X L C D M),
+		qw(i v x l c d m),
 
-sub _highest_value {  (sort { $a <=> $b } values %roman2arabic)[-1] }
+		);
 
-sub is_roman($) {
-	$_[0] =~ / \A \p{IsUppercaseRoman}+ \z /x
-		or
-	$_[0] =~ / \A \p{IsLowercaseRoman}+ \z /x
+	our %roman2arabic = qw(
+		Ⅰ 1 Ⅴ 5 Ⅹ 10
+		Ⅼ 50 Ⅽ 100 Ⅾ 500 Ⅿ 1000 ↁ 5000 ↂ 10000 ↇ 50000 ↈ 100000
+
+		ⅰ 1 ⅴ 5 ⅹ 10
+		ⅼ 50 ⅽ 100 ⅾ 500 ⅿ 1000
+		);
+
+	sub _get_chars { my @chars = $_[0] =~ /(\X)/ug }
+
+	sub _highest_value {  (sort { $a <=> $b } values %roman2arabic)[-1] }
+
+	sub is_roman($) {
+		$_[0] =~ / \A \p{IsUppercaseRoman}+ \z /x
+			or
+		$_[0] =~ / \A \p{IsLowercaseRoman}+ \z /x
+		}
+
+	sub to_perl($) {
+		is_roman $_[0] or return;
+		my($last_digit) = _highest_value();
+		my($arabic);
+
+		foreach my $char ( _get_chars( $_[0] ) ) {
+			my $digit = $roman2arabic{$char};
+			$arabic -= 2 * $last_digit if $last_digit < $digit;
+			$arabic += ($last_digit = $digit);
+			}
+
+		$arabic;
+		}
+
+	BEGIN {
+
+	my %roman_digits = qw(
+		1 ⅠⅤ
+		10 ⅩⅬ
+		100 ⅭⅮ
+		1000 Ⅿↁ
+		10000 ↂↇ
+		100000 ↈↈↈↈ
+		);
+
+	my @figure = reverse sort keys %roman_digits;
+	$roman_digits{$_} = [split(//, $roman_digits{$_}, 2)] foreach @figure;
+
+	sub to_roman($) {
+		my( $arg ) = @_;
+
+		{
+		no warnings 'numeric';
+		0 < $arg and $arg < 4 * _highest_value()  or return;
+		}
+
+		my($x, $roman) = ( '', '' );
+		foreach my $figure ( @figure ) {
+			my( $digit, $i, $v ) = (int( $arg/$figure ), @{$roman_digits{$figure}});
+
+			if( 1 <= $digit and $digit <= 3 ) {
+				$roman .= $i x $digit;
+				}
+			elsif( $digit == 4 ) {
+				$roman .= "$i$v";
+				}
+			elsif( $digit == 5 ) {
+				$roman .= $v;
+				}
+			elsif( 6 <= $digit and $digit <= 8 ) {
+				$roman .= $v . $i x ($digit - 5);
+				}
+			elsif( $digit == 9 ) {
+				$roman .= "$i$x";
+				}
+
+			$arg -= $digit * $figure;
+			$x = $i;
+			}
+
+		$roman;
+		}
 	}
 
-sub to_perl($) {
-    is_roman $_[0] or return;
-    my($last_digit) = _highest_value();
-    my($arabic);
+	sub to_ascii {
+		my( $roman ) = @_;
+		return unless is_roman( $roman );
 
-    foreach my $char ( _get_chars( $_[0] ) ) {
-        my $digit = $roman2arabic{$char};
-        $arabic -= 2 * $last_digit if $last_digit < $digit;
-        $arabic += ($last_digit = $digit);
-	    }
+		$roman = Unicode::Normalize::NFKD( $roman );
 
-    $arabic;
-	}
+		$roman =~ s/ↁ/|))/g;
+		$roman =~ s/ↂ/((|))/g;
+		$roman =~ s/ↈ/(((|)))/g;
+		$roman =~ s/ↇ/|)))/g;
 
-BEGIN {
+		$roman;
+		}
 
-my %roman_digits = qw(
-	1 ⅠⅤ
-	10 ⅩⅬ
-	100 ⅭⅮ
-	1000 Ⅿↁ
-	10000 ↂↇ
-	100000 ↈↈↈↈ
-	);
+	sub IsRoman {
+		IsUppercaseRoman() . IsLowercaseRoman()
+		}
 
-my @figure = reverse sort keys %roman_digits;
-$roman_digits{$_} = [split(//, $roman_digits{$_}, 2)] foreach @figure;
-
-sub to_roman($) {
-    my( $arg ) = @_;
-
-    {
-    no warnings 'numeric';
-    0 < $arg and $arg < 4 * _highest_value()  or return;
-	}
-
-    my($x, $roman) = ( '', '' );
-    foreach my $figure ( @figure ) {
-        my( $digit, $i, $v ) = (int( $arg/$figure ), @{$roman_digits{$figure}});
-
-        if( 1 <= $digit and $digit <= 3 ) {
-            $roman .= $i x $digit;
-        	}
-        elsif( $digit == 4 ) {
-            $roman .= "$i$v";
-        	}
-        elsif( $digit == 5 ) {
-            $roman .= $v;
-        	}
-        elsif( 6 <= $digit and $digit <= 8 ) {
-            $roman .= $v . $i x ($digit - 5);
-        	}
-        elsif( $digit == 9 ) {
-            $roman .= "$i$x";
-        	}
-
-        $arg -= $digit * $figure;
-        $x = $i;
-    	}
-
-	$roman;
-	}
-}
-
-sub to_ascii {
-	my( $roman ) = @_;
-	return unless is_roman( $roman );
-
-	$roman = Unicode::Normalize::NFKD( $roman );
-
-	$roman =~ s/ↁ/|))/g;
-	$roman =~ s/ↂ/((|))/g;
-	$roman =~ s/ↈ/(((|)))/g;
-	$roman =~ s/ↇ/|)))/g;
-
-	$roman;
-	}
-
-sub IsRoman {
-	IsUppercaseRoman() . IsLowercaseRoman()
-	}
-
-sub IsUppercaseRoman {
-	return <<"CODE_NUMBERS";
+	sub IsUppercaseRoman {
+		return <<"CODE_NUMBERS";
 2160
 2164
 2169
@@ -241,45 +239,46 @@ sub IsUppercaseRoman {
 2181 2182
 2187 2188
 CODE_NUMBERS
-	}
-
-sub IsLowercaseRoman {
-	state $string;
-	return $string if defined $string;
-
-	my @codes = ();
-
-	my $uppers = IsUppercaseRoman();
-	open my $string_fh, '<', \ $uppers;
-	while( my $line = <$string_fh> ) {
-		my @n = map { hex } map { m/(\p{HexDigit}+)/g } $line;
-		if( @n == 1 ) { push @codes, $n[0] }
-		if( @n == 2 ) { push @codes, $n[0] .. $n[1] };
 		}
 
-	my @lowers = map { hex } map {
-		my $char_info = Unicode::UCD::charinfo( $_ );
-		$char_info->{lower} ? $char_info->{lower} : ();
-		} @codes;
+	sub IsLowercaseRoman {
+		state $string;
+		return $string if defined $string;
 
-	$string = join "\n", map {
-		sprintf( '%04X', $_ )
-		} @lowers;
+		my @codes = ();
 
-	$string .= "\n";
-	}
+		my $uppers = IsUppercaseRoman();
+		open my $string_fh, '<', \ $uppers;
+		while( my $line = <$string_fh> ) {
+			my @n = map { hex } map { m/(\p{HexDigit}+)/g } $line;
+			if( @n == 1 ) { push @codes, $n[0] }
+			if( @n == 2 ) { push @codes, $n[0] .. $n[1] };
+			}
 
-sub to_roman_lower {
-	return unless &is_roman;
-	
-	my $lower = CORE::lc( $_[0] );
-	
-	$lower =~ s/ↁ/|)/g;       # ↁ U+2181
-	$lower =~ s/ↂ/((|))/g;   # ↂ U+2182
-	$lower =~ s/ↇ/|))/g;      # ↇ U+2187
-	$lower =~ s/ↈ/(((|)))/g; # ↈ U+2188
+		my @lowers = map { hex } map {
+			my $char_info = Unicode::UCD::charinfo( $_ );
+			$char_info->{lower} ? $char_info->{lower} : ();
+			} @codes;
 
-	return $lower;
-	}
+		$string = join "\n", map {
+			sprintf( '%04X', $_ )
+			} @lowers;
+
+		$string .= "\n";
+		}
+
+	sub to_roman_lower {
+		return unless &is_roman;
+
+		my $lower = CORE::lc( $_[0] );
+
+		$lower =~ s/ↁ/|)/g;       # ↁ U+2181
+		$lower =~ s/ↂ/((|))/g;   # ↂ U+2182
+		$lower =~ s/ↇ/|))/g;      # ↇ U+2187
+		$lower =~ s/ↈ/(((|)))/g; # ↈ U+2188
+
+		return $lower;
+		}
+ }
 
 1;
