@@ -20,6 +20,10 @@ I made this module as a way to demonstrate various Unicode things without
 mixing up natural language stuff. Surprisingly, roman numerals can do quite
 a bit with that. You'll have to read the source to see it in action.
 
+There are many fancy characters in this documentation, so you need a good
+font that has the right glyphs. The Symbola font is a good one:
+http://users.teilar.gr/~g1951d/
+
 =head2 Functions
 
 =over 4
