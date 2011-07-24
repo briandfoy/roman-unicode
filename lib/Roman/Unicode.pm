@@ -14,6 +14,7 @@ use Exporter 'import';
 
 $VERSION = '1.02_03';
 
+use Unicode::UCD;
 use Unicode::Normalize qw(NFKD);
 
 =encoding utf8
@@ -242,12 +243,29 @@ CODE_NUMBERS
 	}
 
 sub IsLowercaseRoman {
-	return <<"CODE_NUMBERS";
-2170
-2174
-2179
-217C 217F
-CODE_NUMBERS
+	state $string;
+	return $string if defined $string;
+
+	my @codes = ();
+
+	my $uppers = IsUppercaseRoman();
+	open my $string_fh, '<', \ $uppers;
+	while( my $line = <$string_fh> ) {
+		my @n = map { hex } map { m/(\p{HexDigit}+)/g } $line;
+		if( @n == 1 ) { push @codes, $n[0] }
+		if( @n == 2 ) { push @codes, $n[0] .. $n[1] };
+		}
+
+	my @lowers = map { hex } map {
+		my $char_info = Unicode::UCD::charinfo( $_ );
+		$char_info->{lower} ? $char_info->{lower} : ();
+		} @codes;
+
+	$string = join "\n", map {
+		sprintf( '%04X', $_ )
+		} @lowers;
+
+	$string .= "\n";
 	}
 
 sub to_roman_lower {
