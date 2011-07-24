@@ -189,7 +189,7 @@ package Roman::Unicode {
 			my( $digit, $i, $v ) = (int( $arg/$figure ), @{$roman_digits{$figure}});
 
 			$roman .= do {
-				if( 1 <= $digit and $digit <= 3 )    { $i x $digit }
+				   if( 1 <= $digit and $digit <= 3 ) { $i x $digit }
 				elsif( $digit == 4 )                 { "$i$v" }
 				elsif( $digit == 5 )                 { $v }
 				elsif( 6 <= $digit and $digit <= 8 ) { $v . $i x ($digit - 5) }
