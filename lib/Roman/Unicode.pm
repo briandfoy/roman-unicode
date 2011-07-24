@@ -1,7 +1,8 @@
-package Roman::Unicode;
-
 use utf8;
 use 5.014;
+
+package Roman::Unicode;
+
 use feature qw(unicode_strings);
 
 use strict;
