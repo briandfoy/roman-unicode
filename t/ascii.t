@@ -20,15 +20,15 @@ BEGIN{
 	Ⅰ       I
 	ⅠⅠ      II
 	ⅠⅠⅠ     III
-	ⅠⅤ      IV 
-	Ⅴ       V 
-	ⅤⅠⅠ     VII	 
-	Ⅹ       X 
-	Ⅼ       L 
-	Ⅽ       C 
-	Ⅾ           D 
-	Ⅿ           M 
-	ⅯⅭⅮⅩⅬⅠⅤ     MCDXLIV 
+	ⅠⅤ      IV
+	Ⅴ       V
+	ⅤⅠⅠ     VII
+	Ⅹ       X
+	Ⅼ       L
+	Ⅽ       C
+	Ⅾ           D
+	Ⅿ           M
+	ⅯⅭⅮⅩⅬⅠⅤ     MCDXLIV
 	ⅯⅯⅤⅠⅠ       MMVII
 	ↁ           |\)\)
 	ↂↈ	        ((|))(((|)))
