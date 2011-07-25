@@ -1,4 +1,8 @@
 
+1.02_03 - Mon Jul 25 01:22:21 2011
+	* Improve user-defined properties
+	* Demonstrate lowercasing with Unicode::Casing
+
 1.02_03 - Sun Jul 24 04:41:19 2011
 	* Use Unicode::Casing for case mapping
 	* Create the IsLowercaseRoman property from the IsUppercaseRoman
