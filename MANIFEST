@@ -2,7 +2,7 @@ Changes
 lib/Roman/Unicode.pm
 Makefile.PL
 MANIFEST
-MYMETA.yml
+MANIFEST.SKIP
 README
 t/ascii.t
 t/load.t
