@@ -1,4 +1,7 @@
 
+1.02_04 - Fri Jan  3 12:39:38 2014
+	* Get rid of MYMETA
+
 1.02_03 - Mon Jul 25 01:22:21 2011
 	* Improve user-defined properties
 	* Demonstrate lowercasing with Unicode::Casing
