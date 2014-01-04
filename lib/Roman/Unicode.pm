@@ -164,7 +164,7 @@ package Roman::Unicode {
 
 	use Exporter 'import';
 	@EXPORT_OK = qw( is_roman to_perl to_roman to_ascii );
-	$VERSION = '1.02_04';
+	$VERSION = '1.03';
 
 	use Unicode::UCD;
 	use Unicode::Normalize qw(NFKD);
