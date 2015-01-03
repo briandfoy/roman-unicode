@@ -148,7 +148,7 @@ Alexandr Ciornii, C<< <alexchorny at gmail.com> >> 2007
 
 =head1 COPYRIGHT
 
-Copyright (c) 2011, brian d foy.
+Copyright © 2011-2015, brian d foy <bdfoy@cpan.org>.
 
 You can use this module under the same terms as Perl itself.
 
