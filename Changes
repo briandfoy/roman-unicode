@@ -1,14 +1,9 @@
+# Changes to Roman::Unicode
 
 1.03 - Sat Jan  4 06:33:14 2014
 	* bump to stable version
 
 1.02_04 - Sat Jan  4 06:25:28 2014
-	* Get rid of MYMETA
-
-1.02_04 - Sat Jan  4 06:21:19 2014
-	* Get rid of MYMETA
-
-1.02_04 - Fri Jan  3 12:39:38 2014
 	* Get rid of MYMETA
 
 1.02_03 - Mon Jul 25 01:22:21 2011
