@@ -1,4 +1,25 @@
 
+1.03 - Sat Jan  4 06:33:14 2014
+	* bump to stable version
+
+1.02_04 - Sat Jan  4 06:25:28 2014
+	* Get rid of MYMETA
+
+1.02_04 - Sat Jan  4 06:21:19 2014
+	* Get rid of MYMETA
+
+1.02_04 - Fri Jan  3 12:39:38 2014
+	* Get rid of MYMETA
+
+1.02_03 - Mon Jul 25 01:22:21 2011
+	* Improve user-defined properties
+	* Demonstrate lowercasing with Unicode::Casing
+
+1.02_03 - Sun Jul 24 04:41:19 2011
+	* Use Unicode::Casing for case mapping
+	* Create the IsLowercaseRoman property from the IsUppercaseRoman
+	property with some Unicode::UCD magic
+
 1.02_02 - Thu Jul 21 03:21:18 2011
 	* Use the Perligata ASCII decompositions, like |)))
 

@@ -13,8 +13,8 @@ if( Test::Builder->VERSION < 2 ) {
 		}
 	}
 
-my $class = 'Roman::Unicode';
-use_ok( $class );
+# Need to load this before Unicode::Casing
+BEGIN { use_ok( 'Roman::Unicode' ) }
 
 my %upper2lower = qw(
 	Ⅰ       ⅰ

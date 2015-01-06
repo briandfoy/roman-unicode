@@ -20,6 +20,10 @@ I made this module as a way to demonstrate various Unicode things without
 mixing up natural language stuff. Surprisingly, roman numerals can do quite
 a bit with that. You'll have to read the source to see it in action.
 
+There are many fancy characters in this documentation, so you need a good
+font that has the right glyphs. The Symbola font is a good one:
+http://users.teilar.gr/~g1951d/
+
 =head2 Functions
 
 =over 4
@@ -51,9 +55,9 @@ However, some of the roman numerals don't have lowercase versions.
 =item to_ascii( ROMAN )
 
 If the argument is a valid roman numeral, it returns an ASCII
-representation of it. For characters that have ASCII representations,
-it uses those ASCII characters. For other characters, it uses ASCII
-art representations:
+representation of it. Most of the numeral code points have compatible
+decompositions, so the first step uses NFKD decomposition. For other
+characters, it uses ASCII art representations:
 
 	Roman       ASCII art
 	------      ----------
@@ -62,20 +66,67 @@ art representations:
 	ↈ          (((|)))
 	ↇ           |))
 
-=item IsRoman
+=back
 
-=item IsLowercaseRoman
+=head2 Case mapping
 
-=item IsUppercaseRoman
+As a demonstration of case mapping, I supply one function that uses
+L<Unicode::Casing>. You can lexically override the case-mapping functions
+as described in that module's documentation.
 
-These define special properties to quickly match the characters this
-module considers valid Roman numerals.
+=over 4
 
 =item to_roman_lower
 
 A subroutine you can use with C<Unicode::Casing>. It's a bit more special
 because it turns the higher magnitude characters into ASCII versions. That
-means that the return value might not be a valid according to C<is_roman>.
+means that the return value might not be a valid according to C<is_roman>. It
+returns nothing if the input isn't a valid Roman numeral string.
+
+You can also use this as a stand-alone function instead of C<lc>. That's the
+smart way to do it, but then you don't get to play with C<Unicode::Casing>.
+
+=back
+
+=head2 User-defined properties
+
+Perl lets you define your own properties, as documented in L<perlunicode>. This
+module defines several.
+
+=over 4
+
+=item IsRoman
+
+The C<IsRoman> property is a combination of C<IsUppercaseRoman> and
+C<IsLowercaseRoman>.
+
+=item IsUppercaseRoman
+
+The C<IsUppercaseRoman> property matches these code points:
+
+	Ⅰ       U+2160      ʀᴏᴍᴀɴ ɴᴜᴍᴇʀᴀʟ ᴏɴᴇ
+	Ⅴ       U+2164      ʀᴏᴍᴀɴ ɴᴜᴍᴇʀᴀʟ ꜰɪᴠᴇ
+	Ⅹ       U+2169      ʀᴏᴍᴀɴ ɴᴜᴍᴇʀᴀʟ ᴛᴇɴ
+	Ⅼ       U+216C      ʀᴏᴍᴀɴ ɴᴜᴍᴇʀᴀʟ ꜰɪꜰᴛʏ
+	Ⅽ       U+216D      ʀᴏᴍᴀɴ ɴᴜᴍᴇʀᴀʟ ᴏɴᴇ ʜᴜɴᴅʀᴇᴅ
+	Ⅾ       U+216E      ʀᴏᴍᴀɴ ɴᴜᴍᴇʀᴀʟ ꜰɪᴠᴇ ʜᴜɴᴅʀᴇᴅ
+	Ⅿ       U+216F      ʀᴏᴍᴀɴ ɴᴜᴍᴇʀᴀʟ ᴏɴᴇ ᴛʜᴏᴜsᴀɴᴅ
+	ↁ       U+2181      ʀᴏᴍᴀɴ ɴᴜᴍᴇʀᴀʟ ꜰɪᴠᴇ ᴛʜᴏᴜsᴀɴᴅ
+	ↂ      U+2182      ʀᴏᴍᴀɴ ɴᴜᴍᴇʀᴀʟ ᴛᴇɴ ᴛʜᴏᴜsᴀɴᴅ
+	ↇ       U+2187      ʀᴏᴍᴀɴ ɴᴜᴍᴇʀᴀʟ ꜰɪꜰᴛʏ ᴛʜᴏᴜsᴀɴᴅ
+	ↈ      U+2188      ʀᴏᴍᴀɴ ɴᴜᴍᴇʀᴀʟ ᴏɴᴇ ʜᴜɴᴅʀᴇᴅ ᴛʜᴏᴜsᴀɴᴅ
+
+This excludes the other Roman numeral code points, such as Ⅻ (U+216B, ʀᴏᴍᴀɴ
+ɴᴜᴍᴇʀᴀʟ ᴛᴡᴇʟᴠᴇ) since they are not designed to be part of larger strings of
+Roman numerals.
+
+=item IsLowercaseRoman
+
+The C<IsLowercaseRoman> is the set of lowercase code points derived from the
+set of code points in C<IsUppercaseRoman>. It checks each code point in
+C<IsUppercaseRoman> and checks the Unicode Character Database (UCD) through
+L<Unicode::UCD> to see if it has a lowercase mapping. If there is a lowercase
+mapping, it makes it part of this property.
 
 =back
 
@@ -97,7 +148,7 @@ Alexandr Ciornii, C<< <alexchorny at gmail.com> >> 2007
 
 =head1 COPYRIGHT
 
-Copyright (c) 2011, brian d foy.
+Copyright © 2011-2015, brian d foy <bdfoy@cpan.org>.
 
 You can use this module under the same terms as Perl itself.
 
@@ -113,7 +164,7 @@ package Roman::Unicode {
 
 	use Exporter 'import';
 	@EXPORT_OK = qw( is_roman to_perl to_roman to_ascii );
-	$VERSION = '1.02_03';
+	$VERSION = '1.03';
 
 	use Unicode::UCD;
 	use Unicode::Normalize qw(NFKD);
@@ -149,7 +200,7 @@ package Roman::Unicode {
 		$_[0] =~ / \A \p{IsLowercaseRoman}+ \z /x
 		}
 
-	sub to_perl($) {
+	sub to_perl($) { # Stolen from Roman.pm, mostly
 		is_roman $_[0] or return;
 		my($last_digit) = _highest_value();
 		my($arabic);
@@ -177,7 +228,7 @@ package Roman::Unicode {
 	my @figure = reverse sort keys %roman_digits;
 	$roman_digits{$_} = [split(//, $roman_digits{$_}, 2)] foreach @figure;
 
-	sub to_roman($) {
+	sub to_roman($) { # stolen from Roman.pm, mostly
 		my( $arg ) = @_;
 
 		{
@@ -260,6 +311,7 @@ CODE_NUMBERS
 		$string .= "\n";
 		}
 
+    # Use this with Unicode::Casing, or not
 	sub to_roman_lower {
 		return unless &is_roman;
 

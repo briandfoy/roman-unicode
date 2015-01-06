@@ -2,10 +2,11 @@ Changes
 lib/Roman/Unicode.pm
 Makefile.PL
 MANIFEST
-MYMETA.yml
+MANIFEST.SKIP
 README
 t/ascii.t
 t/load.t
+t/lowercase.t
 t/numbers.t
 t/pod.t
 t/pod_coverage.t
