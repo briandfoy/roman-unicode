@@ -2,17 +2,49 @@ use 5.014;
 use strict;
 use warnings;
 
-my $github    = 'https://github.com/briandfoy/';
-my $main_file = 'lib/';
+use File::Spec::Functions qw(catfile);
+
+my $module    = 'Roman::Unicode';
+my $github    = 'https://github.com/briandfoy/Roman-Unicode';
+my $main_file = catfile( 'lib', split /::/, "$module.pm" );
 
 my %WriteMakefile = (
-    NAME                => 'Roman::Unicode',
-    AUTHOR              => 'brian d foy <brian.d.foy@gmail.com>',
-    VERSION_FROM        => 'lib/Roman/Unicode.pm',
-	ABSTRACT            => 'Make roman numerals, using the Unicode characters for them',
-	PREREQ_PM           => {
+    'NAME'           => $module,
+    'VERSION_FROM'   => $main_file,
+	'ABSTRACT_FROM'  => $main_file,
+    'AUTHOR'         => 'brian d foy <brian.d.foy@gmail.com>',
+	'LICENSE'        => 'perl',
+
+	'CONFIGURE_REQUIRES' => {
+		'ExtUtils::MakeMaker' => '6.64',
+		},
+
+	'BUILD_REQUIRES' => {
+		},
+
+	'TEST_REQUIRES' => {
+		'Test::More' => '0.94',
+		},
+
+	'PREREQ_PM'     => {
 		'Unicode::Casing' => '0',
 		},
+
+	'META_MERGE' => {
+		'meta-spec' => { version => 2 },
+		resources => {
+			repository => {
+				type => 'git',
+				url  => "$github.git",
+				web  => $github,
+				},
+			bugtraker => {
+				web    => "$github/issues",
+				},
+			homepage => $github,
+			},
+		},
+
     clean               => { FILES => 'Roman-* *.bak *.old' },
 	);
 
