@@ -1,10 +1,12 @@
 use 5.014;
+
+package Roman::Unicode;
 use strict;
 use warnings;
 
 use File::Spec::Functions qw(catfile);
 
-my $module    = 'Roman::Unicode';
+my $module    = __PACKAGE__;
 my $github    = 'https://github.com/briandfoy/Roman-Unicode';
 my $main_file = catfile( 'lib', split /::/, "$module.pm" );
 
@@ -16,7 +18,8 @@ my %WriteMakefile = (
 	'LICENSE'        => 'perl',
 
 	'CONFIGURE_REQUIRES' => {
-		'ExtUtils::MakeMaker' => '6.64',
+		'ExtUtils::MakeMaker'   => '6.64',
+		'File::Spec::Functions' => '0',
 		},
 
 	'BUILD_REQUIRES' => {
