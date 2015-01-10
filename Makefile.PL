@@ -1,10 +1,12 @@
 use 5.014;
+
+package Roman::Unicode;
 use strict;
 use warnings;
 
 use File::Spec::Functions qw(catfile);
 
-my $module    = 'Roman::Unicode';
+my $module    = __PACKAGE__;
 ( my $dist = $module ) =~ s/::/-/g;
 
 my $github    = 'https://github.com/briandfoy/Roman-Unicode';
