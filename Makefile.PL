@@ -13,6 +13,8 @@ my $github    = 'https://github.com/briandfoy/Roman-Unicode';
 my $main_file = catfile( 'lib', split /::/, "$module.pm" );
 
 my %WriteMakefile = (
+	'MIN_PERL_VERSION' => '5.014',
+
     'NAME'           => $module,
     'VERSION_FROM'   => $main_file,
 	'ABSTRACT_FROM'  => $main_file,
