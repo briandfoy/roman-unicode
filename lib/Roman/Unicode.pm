@@ -138,7 +138,7 @@ Set, you're limited to numbers less than 400,000 (although you could make
 
 =head1 AUTHOR
 
-brian d foy C<< <brian.d.foy@gmail.com> >> 2011-
+brian d foy C<< <brian.d.foy@gmail.com> >>
 
 This module started with the Roman module, credited to:
 
@@ -148,7 +148,7 @@ Alexandr Ciornii, C<< <alexchorny at gmail.com> >> 2007
 
 =head1 COPYRIGHT
 
-Copyright © 2011-2015, brian d foy <bdfoy@cpan.org>.
+Copyright © 2011-2016, brian d foy <bdfoy@cpan.org>.
 
 You can use this module under the same terms as Perl itself.
 
