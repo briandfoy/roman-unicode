@@ -160,11 +160,10 @@ package Roman::Unicode {
 	use strict;
 	use warnings;
 	use open IO => ':utf8';
-	use vars qw( $VERSION @EXPORT_OK );
 
 	use Exporter 'import';
-	@EXPORT_OK = qw( is_roman to_perl to_roman to_ascii );
-	$VERSION = '1.03';
+	our @EXPORT_OK = qw( is_roman to_perl to_roman to_ascii );
+	our $VERSION = '1.03';
 
 	use Unicode::UCD;
 	use Unicode::Normalize qw(NFKD);
