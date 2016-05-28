@@ -61,11 +61,11 @@ my %WriteMakefile = (
 		},
 
 	'TEST_REQUIRES' => {
-		'Test::More' => '0.94',
+		'Test::More'         => '0.94',
+		'Unicode::Casing'    => '0',
 		},
 
 	'PREREQ_PM'     => {
-		'Unicode::Casing' => '0',
 		},
 
 	'META_MERGE' => {
