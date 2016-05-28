@@ -66,6 +66,8 @@ my %WriteMakefile = (
 		},
 
 	'PREREQ_PM'     => {
+		'Unicode::Normalize' => '0',
+		'Unicode::UCD'       => '0',
 		},
 
 	'META_MERGE' => {
