@@ -45,3 +45,5 @@ foreach my $upper ( sort keys %upper2lower ) {
 	}
 
 done_testing();
+
+exit 0;
