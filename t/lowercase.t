@@ -55,4 +55,4 @@ diag "After done_testing";
 # For some reason Travis CI exits with 139 on v5.14 even though
 # all of the tests pass. So, this is here.
 diag "Before exit";
-CORE::GLOBAL::exit( 0 );
+CORE::exit( 0 );
