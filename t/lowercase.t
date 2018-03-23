@@ -5,7 +5,7 @@ use open IO => ':utf8';
 use utf8;
 use vars qw( %roman2perl );
 
-use Test::More;
+use Test::More 1.0;
 
 if( Test::Builder->VERSION < 2 ) {
 	foreach my $method ( qw(output failure_output) ) {
