@@ -10,6 +10,12 @@ perl:
     - "5.24"
     - "5.26"
 
+branches:
+  only:
+  - master
+  - travis
+  - testing
+
 before_install:
     - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
     - source ~/travis-perl-helpers/init --auto
