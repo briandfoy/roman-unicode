@@ -150,7 +150,7 @@ Alexandr Ciornii, C<< <alexchorny at gmail.com> >> 2007
 
 Copyright © 2011-2016, brian d foy <bdfoy@cpan.org>.
 
-You can use this module under the same terms as Perl itself.
+You can use this module under the terms of Artistic License 2.0.
 
 =cut
 
