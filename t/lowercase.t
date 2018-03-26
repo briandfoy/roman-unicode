@@ -59,3 +59,4 @@ diag "After done_testing";
 # all of the tests pass. So, this is here.
 diag "Before exit";
 CORE::exit( 0 );
+END { diag "END block running" }
