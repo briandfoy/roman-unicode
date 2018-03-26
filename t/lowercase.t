@@ -39,18 +39,15 @@ my %upper2lower = qw(
 
 	diag( "Entering foreach" );
 
-=pod
-
 foreach my $upper ( sort keys %upper2lower ) {
 	my $lower = $upper2lower{$upper};
-	use Unicode::Casing lc => \&Roman::Unicode::to_roman_lower;
+
+	# use Unicode::Casing lc => \&Roman::Unicode::to_roman_lower;
 
 	diag( "After test for $upper" );
-	is( lc $upper, $lower, "$upper turns into $lower"   );
+	# is( lc $upper, $lower, "$upper turns into $lower"   );
 	diag( "After test for $upper" );
 	}
-
-=cut
 
 	diag( "Leaving foreach" );
 
