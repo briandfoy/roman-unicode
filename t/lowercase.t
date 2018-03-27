@@ -51,6 +51,8 @@ foreach my $upper ( sort keys %upper2lower ) {
 
 	diag( "Leaving foreach" );
 
+no	Unicode::Casing;
+
 diag "Before done_testing";
 done_testing();
 diag "After done_testing";
