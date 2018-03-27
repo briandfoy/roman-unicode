@@ -44,5 +44,8 @@ foreach my $upper ( sort keys %upper2lower ) {
 	is( lc $upper, $lower, "$upper turns into $lower"   );
 	}
 
+# unimport becase 5.14 has problems on Travis
+no Unicode::Casing;
+
 done_testing();
 exit(0);
