@@ -37,22 +37,11 @@ my %upper2lower = qw(
 	ↈↈↈ      (((|)))(((|)))(((|)))
 	);
 
-	diag( "Entering foreach" );
+use Unicode::Casing lc => \&Roman::Unicode::to_roman_lower;
 foreach my $upper ( sort keys %upper2lower ) {
 	my $lower = $upper2lower{$upper};
-	use Unicode::Casing lc => \&Roman::Unicode::to_roman_lower;
 
-	diag( "After test for $upper" );
 	is( lc $upper, $lower, "$upper turns into $lower"   );
-	diag( "After test for $upper" );
 	}
-	diag( "Leaving foreach" );
 
-diag "Before done_testing";
 done_testing();
-diag "After done_testing";
-
-# For some reason Travis CI exits with 139 on v5.14 even though
-# all of the tests pass. So, this is here.
-diag "Before exit";
-CORE::exit( 0 );
