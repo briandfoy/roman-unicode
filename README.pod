@@ -30,17 +30,8 @@ name instead of the file location:
 
 	% perldoc Roman::Unicode
 
-You can read the documentation and inspect the meta data on one of the
-CPAN web interfaces, such as L<CPAN Search|http://search.cpan.org/dist/Roman-Unicode> or
-L<MetaCPAN|http://www.metacpan.org/module/Roman::Unicode>:
-
-=over 4
-
-=item *	L<http://search.cpan.org/dist/Roman-Unicode>
-
-=item *	L<http://www.metacpan.org/module/Roman::Unicode>
-
-=back
+You can read the documentation and inspect the meta data at
+L<MetaCPAN|http://www.metacpan.org/module/Roman::Unicode>.
 
 The standard module documentation has example uses in the SYNOPSIS
 section, but you can also look in the I<examples/> directory (if it's
