@@ -8,7 +8,7 @@
 
 =for HTML <a href="https://github.com/briandfoy/Roman-Unicode/blob/master/LICENSE"><img src="https://img.shields.io/cpan/l/Roman-Unicode.svg" /></a>
 
-=for HTML <a href="http://www.metacpan.org/module/Roman::Unicode"><img src="https://img.shields.io/cpan/v/Roman-Unicode.svg" /></A>
+=for HTML <a href="https://metacpan.org/pod/Roman::Unicode"><img src="https://img.shields.io/cpan/v/Roman-Unicode.svg" /></A>
 
 =head1 The Roman::Unicode module
 
@@ -21,7 +21,7 @@ for any Perl module.
 
 To read about L<Roman::Unicode>, look at the embedded documentation
 in the module itself. Inside the distribution, you can format it
-with L<perldoc|http://perldoc.perl.org/perldoc.html>:
+with L<perldoc|https://perldoc.perl.orgperldoc.html>:
 
 	% perldoc lib/Roman/Unicode.pm
 
@@ -31,7 +31,7 @@ name instead of the file location:
 	% perldoc Roman::Unicode
 
 You can read the documentation and inspect the meta data at
-L<MetaCPAN|http://www.metacpan.org/module/Roman::Unicode>.
+L<MetaCPAN|https://metacpan.org/pod/Roman::Unicode>.
 
 The standard module documentation has example uses in the SYNOPSIS
 section, but you can also look in the I<examples/> directory (if it's
