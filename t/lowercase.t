@@ -42,7 +42,7 @@ SKIP: {
 	my $count = keys %upper2lower;
 	skip "$class not installed!", $count unless eval "require $class";
 
-	$class->import( 'lc => \&Roman::Unicode::to_roman_lower' );
+	$class->import( lc => \&Roman::Unicode::to_roman_lower );
 	foreach my $upper ( sort keys %upper2lower ) {
 		my $lower = $upper2lower{$upper};
 		is( lc $upper, $lower, "$upper turns into $lower"   );
