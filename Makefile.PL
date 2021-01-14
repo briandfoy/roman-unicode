@@ -62,7 +62,6 @@ my %WriteMakefile = (
 
 	'TEST_REQUIRES' => {
 		'Test::More'         => '1',
-		'Unicode::Casing'    => '0',
 		},
 
 	'PREREQ_PM'     => {

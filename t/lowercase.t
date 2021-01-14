@@ -37,15 +37,17 @@ my %upper2lower = qw(
 	ↈↈↈ      (((|)))(((|)))(((|)))
 	);
 
-use Unicode::Casing lc => \&Roman::Unicode::to_roman_lower;
-foreach my $upper ( sort keys %upper2lower ) {
-	my $lower = $upper2lower{$upper};
+SKIP: {
+	my $class = 'Unicode::Casing';
+	my $count = keys %upper2lower;
+	skip "$class not installed!", $count unless eval "require $class";
 
-	is( lc $upper, $lower, "$upper turns into $lower"   );
+	$class->import( 'lc => \&Roman::Unicode::to_roman_lower' );
+	foreach my $upper ( sort keys %upper2lower ) {
+		my $lower = $upper2lower{$upper};
+		is( lc $upper, $lower, "$upper turns into $lower"   );
+		}
 	}
 
-# unimport because 5.14 has problems on Travis
-no Unicode::Casing;
 
 done_testing();
-exit(0);
