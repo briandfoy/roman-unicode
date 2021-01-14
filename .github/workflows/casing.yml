@@ -1,0 +1,46 @@
+name: ubuntu
+
+on:
+    push:
+        branches:
+            - '*'
+        tags-ignore:
+            - '*'
+        pull_request:
+
+jobs:
+    perl:
+        runs-on: ${{ matrix.os }}
+        strategy:
+          matrix:
+            os:
+                - ubuntu-latest
+                - macos-latest
+                - windows-latest
+            perl-version:
+                - 'latest'
+
+        container:
+            image: perl:${{ matrix.perl-version }}
+        steps:
+            - uses: actions/checkout@v2
+            - name: Platform check
+              run: uname -a
+            - name: Perl version check
+              run: perl -V
+            - name: Install cpanm and multiple modules
+              run: |
+                curl -L https://cpanmin.us | perl - App::cpanminus
+                cpanm --notest IO::Socket::SSL
+                cpanm --notest App::Cpan
+                cpan -M https://www.cpan.org -T ExtUtils::MakeMaker
+            - name: Install dependencies
+              run: |
+                cpan -M https://www.cpan.org -T .
+            - name: Install Unicode::Casing
+              run: |
+                cpan -M https://www.cpan.org -T Unicode::Casing
+            - name: Run tests
+              run: |
+                perl Makefile.PL
+                make test
