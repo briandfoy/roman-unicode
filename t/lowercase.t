@@ -9,7 +9,7 @@ use Test::More 1.0;
 
 diag( "Test::Builder " . Test::Builder->VERSION );
 if( Test::Builder->VERSION < 2 ) {
-	foreach my $method ( qw(output failure_output) ) {
+	foreach my $method ( qw(output failure_output todo_output) ) {
 		binmode Test::More->builder->$method(), ':encoding(UTF-8)';
 		}
 	}
@@ -38,12 +38,12 @@ my %upper2lower = qw(
 	ↈↈↈ      (((|)))(((|)))(((|)))
 	);
 
-SKIP: {
-	my $class = 'Unicode::Casing';
-	my $count = keys %upper2lower;
-	skip "$class not installed!", $count unless eval "require $class";
+my $unicode_casing = eval { require Unicode::Casing };
 
-	$class->import( lc => \&Roman::Unicode::to_roman_lower );
+SKIP: {
+	my $count = keys %upper2lower;
+	skip "Unicode::Casing not installed!", $count unless $unicode_casing;
+	use Unicode::Casing lc => \&Roman::Unicode::to_roman_lower;
 	foreach my $upper ( sort keys %upper2lower ) {
 		my $lower = $upper2lower{$upper};
 		is( Roman::Unicode::to_roman_lower( $upper ), $lower, "$upper turns into $lower (to_roman_lower)"   );
