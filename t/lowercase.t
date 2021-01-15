@@ -1,12 +1,13 @@
 use 5.014;
 use strict;
 use warnings;
-use open IO => ':utf8';
+use open qw(:std :utf8);
 use utf8;
 use vars qw( %roman2perl );
 
 use Test::More 1.0;
 
+diag( "Test::Builder " . Test::Builder->VERSION );
 if( Test::Builder->VERSION < 2 ) {
 	foreach my $method ( qw(output failure_output) ) {
 		binmode Test::More->builder->$method(), ':encoding(UTF-8)';
