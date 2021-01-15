@@ -1,4 +1,7 @@
 
+1.032_02 2021-01-15T17:46:23Z
+	* Try harder to get the Unicode::Casing tests to work.
+
 1.032_01 2021-01-15T16:52:36Z
 	* Play with CPAN Testers
 
