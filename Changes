@@ -1,4 +1,7 @@
 
+1.032_01 2021-01-15T16:52:36Z
+	* Play with CPAN Testers
+
 1.032 2021-01-14T10:34:43Z
 	* freshen distro, remove Travis CI, add GitHub Actions
 
