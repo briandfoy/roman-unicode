@@ -38,18 +38,17 @@ my %upper2lower = qw(
 	ↈↈↈ      (((|)))(((|)))(((|)))
 	);
 
-my $unicode_casing = eval { require Unicode::Casing };
-
 SKIP: {
 	my $count = keys %upper2lower;
-	skip "Unicode::Casing not installed!", $count unless eval {
-		use Unicode::Casing lc => \&Roman::Unicode::to_roman_lower;
+	skip "Unicode::Casing not installed!", $count unless eval <<'HERE';
+		use Unicode::Casing lc => \\&Roman::Unicode::to_roman_lower;
 		foreach my $upper ( sort keys %upper2lower ) {
 			my $lower = $upper2lower{$upper};
 			is( Roman::Unicode::to_roman_lower( $upper ), $lower, "$upper turns into $lower (to_roman_lower)"   );
 			is( lc $upper, $lower, "$upper turns into $lower (lc)"   );
 			}
 		};
+HERE
 	}
 
 
