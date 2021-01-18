@@ -1,4 +1,7 @@
 
+1.033 2021-01-18T13:44:46Z
+	* Fix a bug with testing Unicode::Casing feature.
+
 1.032_02 2021-01-15T17:46:23Z
 	* Try harder to get the Unicode::Casing tests to work.
 
