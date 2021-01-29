@@ -8,6 +8,8 @@
 
 =for HTML <a href="../../actions?query=workflow%3Awindows"><img src="../../workflows/windows/badge.svg"></a>
 
+=for HTML <a href="https://ci.appveyor.com/project/briandfoy/roman-unicode"><img src="https://ci.appveyor.com/api/projects/status/bqikm4w93b7auivt?svg=true"></a>
+
 =for HTML <a href='https://coveralls.io/github/briandfoy/Roman-Unicode?branch=master'><img src='https://coveralls.io/repos/github/briandfoy/Roman-Unicode/badge.svg?branch=master' alt='Coverage Status' /></a>
 
 =for HTML <a href="https://github.com/briandfoy/Roman-Unicode/blob/master/LICENSE"><img src="https://img.shields.io/cpan/l/Roman-Unicode.svg" /></a>
