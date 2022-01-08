@@ -148,7 +148,7 @@ Alexandr Ciornii, C<< <alexchorny at gmail.com> >> 2007
 
 =head1 COPYRIGHT
 
-Copyright © 2011-2021, brian d foy <bdfoy@cpan.org>.
+Copyright © 2011-2022, brian d foy <bdfoy@cpan.org>.
 
 You can use this module under the terms of Artistic License 2.0.
 
