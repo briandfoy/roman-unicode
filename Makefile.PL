@@ -49,7 +49,7 @@ my %WriteMakefile = (
     'NAME'           => $module,
     'VERSION_FROM'   => $main_file,
 	'ABSTRACT_FROM'  => $main_file,
-    'AUTHOR'         => 'brian d foy <brian.d.foy@gmail.com>',
+    'AUTHOR'         => 'brian d foy <briandfoy@pobox.com>',
 	'LICENSE'        => 'artistic_2',
 
 	'CONFIGURE_REQUIRES' => {
